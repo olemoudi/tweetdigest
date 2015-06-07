@@ -67,8 +67,8 @@ class TwitterDigester(StreamListener):
                     print
                     print "\033[92m@%s\033[0m : %s" %(status.user.screen_name,  status.text)
                     print
-                else:
-                    print "\r\033[91m%i\033[0m Tweets Monitored"  % (self.tweet_count), 
+
+                print "\r\033[91m%i\033[0m Tweets Monitored"  % (self.tweet_count), 
             except Exception as e:
                 print e
                 traceback.print_stack()
