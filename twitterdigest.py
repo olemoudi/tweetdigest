@@ -73,7 +73,6 @@ class TwitterDigester(StreamListener):
                 print e
                 traceback.print_stack()
                 # something is bad
-                raise e
 
     def on_disconnect(self, notice):
         self.error = True
