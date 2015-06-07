@@ -196,7 +196,9 @@ if __name__ == '__main__':
             print
             print "Ctrl+C detected, disconnecting streams..."
 
-        except:
+        except Exception as e:
+            print e
+            traceback.print_stack()
             time.sleep(180)
         finally:
             try:
