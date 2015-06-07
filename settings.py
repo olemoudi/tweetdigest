@@ -8,13 +8,13 @@ password = "thepassword" # smtp password
 # All tweets from gold handles will be included in the digest
 golds = ['twitter', 'facebook', 'google']
 
-# All tweets from the timeline with matching patterns will be included in the digest
+# All tweets from the timeline with matching regex patterns will be included in the digest
 patterns = ['win', 'prize']
 
 # additional stream keywords to add to the user timeline (mind the amount of tweets)
 track_terms = ['contest', 'soccer','film']
 
-# Tweets with RT or Fav values above these thresholds will be included in the digest
+# Tweets with RT or Fav values within these ranges will be included in the digest
 rt_range = range(3, 20)
 fav_range = range(2, 8)
 
