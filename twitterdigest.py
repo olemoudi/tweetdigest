@@ -194,7 +194,8 @@ if __name__ == '__main__':
                 scheduler.run()
         except KeyboardInterrupt:
             print
-            print "Ctrl+C detected, disconnecting streams..."
+            print "Ctrl+C detected, sending email..."
+            td.send_email()
 
         except Exception as e:
             print e
