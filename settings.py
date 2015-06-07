@@ -15,8 +15,8 @@ patterns = ['win', 'prize']
 track_terms = ['contest', 'soccer','film']
 
 # Tweets with RT or Fav values above these thresholds will be included in the digest
-rt_threshold = 100
-fav_threshold = 20
+rt_range = range(3, 20)
+fav_range = range(2, 8)
 
 # Minimum length for an interesting tweet (tip: http://t.co/xxxxxxxxxx is 22)
 tweet_length = 22

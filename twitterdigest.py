@@ -55,10 +55,10 @@ class TwitterDigester(StreamListener):
                             selected = True
                     # check RT and FAV number
                     if hasattr(status, 'retweeted_status'):
-                        if int(status.retweeted_status.retweet_count) > self.config['rt_threshold']:
+                        if int(status.retweeted_status.retweet_count) in self.config['rt_range']:
                             self.report['retweeted'].append(status)
                             selected = True
-                        elif int(status.retweeted_status.favorite_count) > self.config['fav_threshold']:
+                        elif int(status.retweeted_status.favorite_count) in self.config['fav_range']:
                             self.report['favorited'].append(status)
                             selected = True
 
