@@ -196,14 +196,17 @@ if __name__ == '__main__':
             print
             print "Ctrl+C detected, sending email..."
             td.send_email()
+            break
 
         except Exception as e:
             print e
             traceback.print_stack()
-            time.sleep(180)
-        finally:
-            try:
-                stream.disconnect()
-                stream_filter.disconnect()
-            except:
-                pass
+            continue
+    try:
+        stream.disconnect()
+        stream_filter.disconnect()
+    except Exception as e:
+        print e
+        traceback.print_stack()
+    finally:
+        sys.exit(1)
