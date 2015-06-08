@@ -48,13 +48,14 @@ class TwitterDigester(StreamListener):
                         self.report['golds'][status.user.screen_name].append(status)
                         selected = True
                     # check patterns
-                    for pattern in self.config['patterns']:
-                        regex = re.compile(pattern, re.IGNORECASE|re.DOTALL)
-                        if regex.search(status.text):
-                            self.report['patterns'][pattern].append(status)
-                            selected = True
+                    elif not selected:
+                        for pattern in self.config['patterns']:
+                            regex = re.compile(pattern, re.IGNORECASE|re.DOTALL)
+                            if regex.search(status.text):
+                                self.report['patterns'][pattern].append(status)
+                                selected = True
                     # check RT and FAV number
-                    if hasattr(status, 'retweeted_status'):
+                    elif hasattr(status, 'retweeted_status'):
                         if int(status.retweeted_status.retweet_count) in self.config['rt_range']:
                             self.report['retweeted'].append(status)
                             selected = True
