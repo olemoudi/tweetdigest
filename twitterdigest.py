@@ -184,7 +184,7 @@ if __name__ == '__main__':
             auth.set_access_token(td.config['access_token'], td.config['access_token_secret'])
 
             stream = Stream(auth, td)    
-            stream.userstream(async=True)
+            stream.userstream(replies=True, async=True)
             stream_filter = Stream(auth, td)    
             stream_filter.filter(track=td.config['track_terms'], async=True)
 
