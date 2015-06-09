@@ -14,6 +14,9 @@ patterns = ['win', 'prize']
 # additional stream keywords to add to the user timeline (mind the amount of tweets)
 track_terms = ['contest', 'soccer','film']
 
+# blacklist of regexes
+blacklist = []
+
 # Tweets with RT or Fav values within these ranges will be included in the digest
 rt_range = range(3, 20)
 fav_range = range(2, 8)

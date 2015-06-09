@@ -43,6 +43,13 @@ class TwitterDigester(StreamListener):
             self.tweet_count += 1
             try:
                 if len(status.text) > self.config['tweet_length']:
+                    discarded = False
+                    for pattern in self.config['blacklist']:
+                        regex = re.compile(pattern, re.IGNORECASE|re.DOTALL)
+                        if regex.search(status.text):
+                            discarded = True
+                            break
+                    if discarded: return
                     # check goldlist
                     if status.user.screen_name.lower() in map(str.lower, self.config['golds']):
                         self.report['golds'][status.user.screen_name].append(status)
@@ -65,6 +72,7 @@ class TwitterDigester(StreamListener):
 
                 if selected:
                     self.selected_tweets += 1
+                    print
                     print
                     print "\033[92m@%s\033[0m : %s" %(status.user.screen_name,  status.text)
                     print
