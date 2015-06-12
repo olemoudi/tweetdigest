@@ -185,33 +185,37 @@ class TwitterDigester(StreamListener):
 
 if __name__ == '__main__':
 
-    while True:
-        try:
-            config = {}
-            execfile(sys.argv[1], config)
-            td = TwitterDigester(config)
-            auth = OAuthHandler(td.config['consumer_key'], td.config['consumer_secret'])
-            auth.set_access_token(td.config['access_token'], td.config['access_token_secret'])
+    try:
+        while True:
+            try:
+                config = {}
+                execfile(sys.argv[1], config)
+                td = TwitterDigester(config)
+                auth = OAuthHandler(td.config['consumer_key'], td.config['consumer_secret'])
+                auth.set_access_token(td.config['access_token'], td.config['access_token_secret'])
 
-            stream = Stream(auth, td)    
-            stream.userstream(async=True)
-            stream_filter = Stream(auth, td)    
-            stream_filter.filter(track=td.config['track_terms'], async=True)
+                stream = Stream(auth, td)    
+                stream.userstream(async=True)
+                stream_filter = Stream(auth, td)    
+                stream_filter.filter(track=td.config['track_terms'], async=True)
 
-            scheduler = sched.scheduler(time.time, time.sleep)
-            while True:
-                scheduler.enter(td.config['periodicity'], 1, td.send_email, ([]))
-                scheduler.run()
-        except KeyboardInterrupt:
-            print
-            print "Ctrl+C detected, sending email..."
-            td.send_email()
-            break
+                scheduler = sched.scheduler(time.time, time.sleep)
+                while True:
+                    scheduler.enter(td.config['periodicity'], 1, td.send_email, ([]))
+                    scheduler.run()
+            except KeyboardInterrupt:
+                print
+                print "Ctrl+C detected, sending email..."
+                td.send_email()
+                raise
+            except Exception as e:
+                print e
+                traceback.print_stack()
+                continue
 
-        except Exception as e:
-            print e
-            traceback.print_stack()
-            continue
+    except Exception as e:
+        print e
+        traceback.print_stack()
     try:
         stream.disconnect()
         stream_filter.disconnect()
