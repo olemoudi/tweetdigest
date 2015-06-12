@@ -42,6 +42,7 @@ class TwitterDigester(StreamListener):
         with self.lock:
             self.tweet_count += 1
             try:
+                # check regex blacklist
                 if len(status.text) > self.config['tweet_length']:
                     discarded = False
                     for pattern in self.config['blacklist']:
@@ -50,6 +51,7 @@ class TwitterDigester(StreamListener):
                             discarded = True
                             break
                     if discarded: return
+
                     # check goldlist
                     if status.user.screen_name.lower() in map(str.lower, self.config['golds']):
                         self.report['golds'][status.user.screen_name].append(status)
@@ -62,7 +64,7 @@ class TwitterDigester(StreamListener):
                                 self.report['patterns'][pattern].append(status)
                                 selected = True
                     # check RT and FAV number
-                    elif hasattr(status, 'retweeted_status'):
+                    if not selected and hasattr(status, 'retweeted_status'):
                         if int(status.retweeted_status.retweet_count) in self.config['rt_range']:
                             self.report['retweeted'].append(status)
                             selected = True
