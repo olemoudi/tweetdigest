@@ -68,7 +68,7 @@ class TwitterDigester(StreamListener):
                         if int(status.retweeted_status.retweet_count) in self.config['rt_range']:
                             self.report['retweeted'].append(status)
                             selected = True
-                        elif int(status.retweeted_status.favorite_count) in self.config['fav_range']:
+                        elif int(status.retweeted_status.favorite_count)  in self.config['fav_range'] and int(status.retweeted_status.retweet_count) < 5:
                             self.report['favorited'].append(status)
                             selected = True
 
