@@ -185,6 +185,7 @@ class TwitterDigester(StreamListener):
 
 if __name__ == '__main__':
 
+    ctrlc = False
     try:
         while True:
             try:
@@ -207,11 +208,13 @@ if __name__ == '__main__':
                 print
                 print "Ctrl+C detected, sending email..."
                 td.send_email()
-                raise
+                ctrlc = True
             except Exception as e:
                 print e
                 traceback.print_stack()
-                continue
+            finally:
+                if ctrlc:
+                    break
 
     except Exception as e:
         print e
